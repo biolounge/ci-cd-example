@@ -17,6 +17,12 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag biolounge/ci-cd-example:latest
-    - name: Push the latest Docker image
-      run: docker push biolounge/ci-cd-example:latest
+      run: docker build --file Dockerfile -t ci-cd-example .
+    - name: Tags
+        run: |
+          docker tag ci-cd-example ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:${{ github.sha }}
+          docker tag ci-cd-example ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:latest
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:latest
