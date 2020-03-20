@@ -22,7 +22,7 @@ jobs:
         run: |
           docker tag ci-cd-example ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:${{ github.sha }}
           docker tag ci-cd-example ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:latest
-      - name: Push
+    - name: Push
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:${{ github.sha }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-example:latest
